@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Author>Metal666</Author>
+		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
+		<RootNamespace>$(Name)</RootNamespace>
+		<Version>0.0.1</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>$(Name)</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup>
+		<IsPublishable>False</IsPublishable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageOutputPath>..\Build\Packages</PackageOutputPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Title>$(Name)</Title>
+		<PackageVersion>$(AssemblyVersion)</PackageVersion>
+		<Authors>$(Author)</Authors>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="GodotSharp" Version="4.2.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GodotUtilities.SourceGenerators\GodotUtilities.SourceGenerators.csproj" />
+	</ItemGroup>
+</Project>
