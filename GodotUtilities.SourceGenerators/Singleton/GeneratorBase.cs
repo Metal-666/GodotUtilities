@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Metal666.GodotUtilities.Common.Attributes;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -41,7 +43,7 @@ public abstract class GeneratorBase : IIncrementalGenerator {
 																																	IncrementalValueProvider<Compilation> compilationProvider) {
 
 		IncrementalValuesProvider<ClassDeclarationSyntax> classDeclarations =
-			syntaxProvider.ForAttributeWithMetadataName(typeof(SingletonAttribute).FullName ?? "",
+			syntaxProvider.ForAttributeWithMetadataName(typeof(SingletonAttribute).FullName,
 														static (node, _) =>
 																	node is ClassDeclarationSyntax,
 														static (context, _) =>

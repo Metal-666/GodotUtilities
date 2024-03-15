@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>preview</LangVersion>
 		<Nullable>Enable</Nullable>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Author>Metal666</Author>
 		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
 		<RootNamespace>$(Name)</RootNamespace>
-		<Version>0.0.5</Version>
+		<Version>0.0.1</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AssemblyName>$(Name)</AssemblyName>
@@ -23,7 +24,7 @@
 		<RepositoryUrl>https://github.com/Metal-666/GodotUtilities.git</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>https://github.com/Metal-666/GodotUtilities/tree/main/GodotUtilities</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/Metal-666/GodotUtilities/tree/main/GodotUtilities.Common</PackageProjectUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
@@ -36,14 +37,5 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="GodotSharp" Version="4.2.1" />
-		<PackageReference Include="Metal666.GodotUtilities.Common" Version="0.0.*" />
-		<PackageReference Include="Metal666.GodotUtilities.SourceGenerators" Version="0.0.*" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\GodotUtilities.Common\GodotUtilities.Common.csproj" PrivateAssets="All" />
-		<ProjectReference Include="..\GodotUtilities.SourceGenerators\GodotUtilities.SourceGenerators.csproj" PrivateAssets="All" />
 	</ItemGroup>
 </Project>

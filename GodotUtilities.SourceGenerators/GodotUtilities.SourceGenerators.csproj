@@ -2,13 +2,13 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>preview</LangVersion>
-		<Nullable>enable</Nullable>
+		<Nullable>Enable</Nullable>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Author>Metal666</Author>
 		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
 		<RootNamespace>$(Name)</RootNamespace>
-		<Version>0.0.1</Version>
+		<Version>0.0.4</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AssemblyName>$(Name)</AssemblyName>
@@ -18,6 +18,7 @@
 		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageOutputPath>..\Build\Packages</PackageOutputPath>
+		<IncludeBuildOutput>False</IncludeBuildOutput>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Title>$(Name)</Title>
@@ -26,20 +27,32 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/Metal-666/GodotUtilities/tree/main/GodotUtilities.SourceGenerators</PackageProjectUrl>
-		<IncludeSymbols>True</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Include="..\LICENSE">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="$(OutputPath)\$(AssemblyName).dll">
+			<Pack>True</Pack>
+			<PackagePath>analyzers/dotnet/cs</PackagePath>
+			<Visible>False</Visible>
+		</None>
+		<None Include="$(OutputPath)\Metal666.GodotUtilities.Common.dll">
+			<Pack>True</Pack>
+			<PackagePath>analyzers/dotnet/cs</PackagePath>
+			<Visible>False</Visible>
+		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" PrivateAssets="All" />
+		<PackageReference Include="Metal666.GodotUtilities.Common" Version="0.0.*" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GodotUtilities.Common\GodotUtilities.Common.csproj" PrivateAssets="All" />
 	</ItemGroup>
 </Project>
