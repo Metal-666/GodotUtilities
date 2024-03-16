@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Metal666.GodotUtilities;
 
-public partial class AdvancedSceneTree : SceneTree {
+public abstract partial class AdvancedSceneTreeBase : SceneTree {
 
 	public virtual List<LoggerBase> Loggers { get; set; } =
 		new() {
