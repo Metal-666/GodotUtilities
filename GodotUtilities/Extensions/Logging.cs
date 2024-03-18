@@ -14,9 +14,12 @@ public static class Logging {
 							string message,
 							LogLevel logLevel) {
 
-		if(node.GetTree() is not AdvancedSceneTreeBase advancedSceneTree) {
+		AdvancedSceneTreeBase? advancedSceneTree =
+			node.GetTree<AdvancedSceneTreeBase>();
 
-			GD.PushError("Failed to write log: current tree type is not AdvancedSceneTree!");
+		if(advancedSceneTree == null) {
+
+			GD.PushError($"Failed to write log: current tree type does not inherit {typeof(AdvancedSceneTreeBase)}!");
 
 			return;
 

@@ -7,7 +7,7 @@
 		<Author>Metal666</Author>
 		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
 		<RootNamespace>$(Name)</RootNamespace>
-		<Version>0.0.6</Version>
+		<Version>0.0.7</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AssemblyName>$(Name)</AssemblyName>
@@ -39,11 +39,5 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="GodotSharp" Version="4.2.1" />
-		<PackageReference Include="Metal666.GodotUtilities.Common" Version="0.0.*" />
-		<PackageReference Include="Metal666.GodotUtilities.SourceGenerators" Version="0.0.*" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\GodotUtilities.Common\GodotUtilities.Common.csproj" PrivateAssets="All" />
-		<ProjectReference Include="..\GodotUtilities.SourceGenerators\GodotUtilities.SourceGenerators.csproj" PrivateAssets="All" />
 	</ItemGroup>
 </Project>
