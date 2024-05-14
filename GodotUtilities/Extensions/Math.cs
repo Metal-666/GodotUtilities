@@ -36,9 +36,27 @@ public static class Math {
 		new(Mathf.RoundToInt(vector.X),
 					Mathf.RoundToInt(vector.Y));
 
+	public static Vector2I FloorToInt(this Vector2 vector) =>
+		new(Mathf.FloorToInt(vector.X),
+					Mathf.FloorToInt(vector.Y));
+
+	public static Vector2I CeilToInt(this Vector2 vector) =>
+		new(Mathf.CeilToInt(vector.X),
+					Mathf.CeilToInt(vector.Y));
+
 	public static Vector3I RoundToInt(this Vector3 vector) =>
 		new(Mathf.RoundToInt(vector.X),
 					Mathf.RoundToInt(vector.Y),
 					Mathf.RoundToInt(vector.Z));
+
+	public static Vector3I FloorToInt(this Vector3 vector) =>
+		new(Mathf.FloorToInt(vector.X),
+					Mathf.FloorToInt(vector.Y),
+					Mathf.FloorToInt(vector.Z));
+
+	public static Vector3I CeilToInt(this Vector3 vector) =>
+		new(Mathf.CeilToInt(vector.X),
+					Mathf.CeilToInt(vector.Y),
+					Mathf.CeilToInt(vector.Z));
 
 }
