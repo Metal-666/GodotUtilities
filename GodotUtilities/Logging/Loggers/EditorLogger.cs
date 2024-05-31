@@ -1,49 +1,44 @@
 ﻿using Godot;
 
+using Metal666.GodotUtilities.Utilities;
+
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace Metal666.GodotUtilities.Logging.Loggers;
 
-public record EditorLogger : LoggerBase {
+[GlobalClass]
+public partial class EditorLogger : LoggerBase {
 
-	public static Dictionary<Type, Color?> TypesLogColorsCache { get; set; } =
-		new();
+	public override void Write(string message,
+								LogLevel logLevel,
+								Type? sourceType = null,
+								int indentation = 0) =>
+		Log(message, logLevel, sourceType, indentation);
 
-	public override void Write(string message, LogLevel logLevel, Type? sourceType = null) {
+	public static void Log(string message,
+							LogLevel logLevel,
+							Type? sourceType = null,
+							int indentation = 0) {
 
-		Color? logColor = null;
+		if(Is.Standalone) {
 
-		if(sourceType != null) {
-
-			if(!TypesLogColorsCache.TryGetValue(sourceType, out logColor)) {
-
-				logColor =
-					sourceType.GetCustomAttribute<LogColorAttribute>()?
-								.Color;
-
-				TypesLogColorsCache[sourceType] = logColor;
-
-			}
+			return;
 
 		}
+
+		PopulateLogSources();
+
+		LogSourceData? logSourceData =
+			GetLogSourceData(sourceType);
 
 		switch(logLevel) {
 
 			case LogLevel.Message: {
 
-				if(logColor.HasValue) {
-
-					GD.PrintRich($"[color={logColor.Value.ToHtml()}]{message}[/color]");
-
-				}
-
-				else {
-
-					GD.Print(message);
-
-				}
+				GD.PrintRich(message.Indent(indentation)
+											.PrependSource(logSourceData?.Name,
+															LogSourceData.LongestName)
+											.Color(logSourceData?.Color));
 
 				break;
 
@@ -51,7 +46,7 @@ public record EditorLogger : LoggerBase {
 
 			case LogLevel.Warning: {
 
-				GD.PushWarning(message);
+				GD.PushWarning(message.PrependSource(logSourceData?.Name));
 
 				break;
 
@@ -59,7 +54,7 @@ public record EditorLogger : LoggerBase {
 
 			case LogLevel.Error: {
 
-				GD.PushError(message);
+				GD.PushError(message.PrependSource(logSourceData?.Name));
 
 				break;
 
