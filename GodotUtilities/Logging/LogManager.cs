@@ -1,59 +1,30 @@
-﻿using Godot;
-
-using Metal666.GodotUtilities.Logging.Loggers;
-using Metal666.GodotUtilities.Utilities;
+﻿using Metal666.GodotUtilities.Logging.Loggers;
 
 using System;
+using System.Collections.Generic;
 
 namespace Metal666.GodotUtilities.Logging;
 
-public partial class LogManager : Node {
+public static class LogManager {
 
-	public static LogManager? Instance { get; protected set; }
-
-#nullable disable
-	[Export]
-	public virtual LoggerBase[] Loggers { get; set; }
-#nullable enable
-
-	#region Node Events
-	public override void _Ready() {
-
-		base._Ready();
-
-		Instance = this;
-
-	}
-	#endregion
+	public static List<LoggerBase>? Loggers { get; set; }
 
 	public static void Log(string message,
 							LogLevel logLevel = LogLevel.Message,
 							Type? sourceType = null,
 							int indentation = 0) {
 
-		LoggerBase[]? loggers = Instance?.Loggers;
+		Loggers ??=
+			new() {
 
-		if(loggers == null) {
+				new EditorLogger(),
+				new ConsoleLogger()
 
-			if(Is.Editor) {
+			};
 
-				EditorLogger.Log(message, logLevel, sourceType, indentation);
+		foreach(LoggerBase logger in Loggers) {
 
-			}
-
-			else {
-
-				ConsoleLogger.Log(message, logLevel, sourceType, indentation);
-
-			}
-
-			return;
-
-		}
-
-		foreach(LoggerBase logger in loggers) {
-
-			logger.Write(message, logLevel, sourceType, indentation);
+			logger.Log(message, logLevel, sourceType, indentation);
 
 		}
 

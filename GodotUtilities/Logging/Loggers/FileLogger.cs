@@ -13,21 +13,17 @@ public partial class FileLogger : LoggerBase {
 	public virtual string Path { get; set; }
 #nullable enable
 
-	public override void Write(string message,
-								LogLevel logLevel,
-								Type? sourceType = null,
-								int indentation = 0) {
-
-		PopulateLogSources();
-
-		LogSourceData? logSourceData =
-			GetLogSourceData(sourceType);
+	protected override void Write(string message,
+									LogLevel logLevel,
+									Type? sourceType = null,
+									LogSourceData? sourceData = null,
+									int indentation = 0) {
 
 		try {
 
 			File.WriteAllText(Path,
 								message.Indent(indentation)
-												.PrependSource(logSourceData?.Name));
+												.PrependSource(sourceData?.Name));
 
 		}
 

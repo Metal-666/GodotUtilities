@@ -11,28 +11,13 @@ namespace Metal666.GodotUtilities.Logging.Loggers;
 [GlobalClass]
 public partial class ConsoleLogger : LoggerBase {
 
-#nullable disable
-	public static Dictionary<Type, ConsoleColor> ConsoleSourceColors { get; set; }
-#nullable enable
+	public static Dictionary<Type, ConsoleColor>? ConsoleSourceColors { get; set; } = null;
 
-	public override void Write(string message,
-								LogLevel logLevel,
-								Type? sourceType = null,
-								int indentation = 0) =>
-		Log(message, logLevel, sourceType, indentation);
-
-	public static void Log(string message,
-							LogLevel logLevel,
-							Type? sourceType = null,
-							int indentation = 0) {
-
-		if(Is.Editor) {
-
-			return;
-
-		}
-
-		PopulateLogSources();
+	protected override void Write(string message,
+									LogLevel logLevel,
+									Type? sourceType = null,
+									LogSourceData? sourceData = null,
+									int indentation = 0) {
 
 		if(ConsoleSourceColors == null) {
 
@@ -54,16 +39,13 @@ public partial class ConsoleLogger : LoggerBase {
 
 		}
 
-		LogSourceData? logSourceData =
-			GetLogSourceData(sourceType);
-
 		ConsoleColor foregroundColor = Console.ForegroundColor;
 
 		switch(logLevel) {
 
 			case LogLevel.Message: {
 
-				if(sourceType != null &
+				if(sourceType != null &&
 					ConsoleSourceColors.TryGetValue(sourceType, out ConsoleColor color)) {
 
 					Console.ForegroundColor = color;
@@ -94,7 +76,7 @@ public partial class ConsoleLogger : LoggerBase {
 
 		Console.WriteLine(message.Indent(indentation,
 												"-")
-										.PrependSource(logSourceData?.Name,
+										.PrependSource(sourceData?.Name,
 														LogSourceData.LongestName));
 
 		Console.ForegroundColor = foregroundColor;
@@ -145,5 +127,7 @@ public partial class ConsoleLogger : LoggerBase {
 		return result;
 
 	}
+
+	public override bool ShouldLog => !Is.Editor;
 
 }

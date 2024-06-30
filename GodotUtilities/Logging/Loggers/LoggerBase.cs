@@ -13,17 +13,41 @@ public abstract partial class LoggerBase : Resource {
 	public static Dictionary<Type, LogSourceData> LogSources { get; set; }
 #nullable enable
 
-	public abstract void Write(string message,
+	public virtual void Log(string message,
 								LogLevel logLevel,
 								Type? sourceType = null,
-								int indentation = 0);
+								int indentation = 0) {
+
+		if(!ShouldLog) {
+
+			return;
+
+		}
+
+		PopulateLogSources();
+
+		Write(message,
+			logLevel,
+			sourceType,
+			GetLogSourceData(sourceType),
+			indentation);
+
+	}
+
+	protected abstract void Write(string message,
+									LogLevel logLevel,
+									Type? sourceType = null,
+									LogSourceData? sourceData = null,
+									int indentation = 0);
+
+	public virtual bool ShouldLog => true;
 
 	public static LogSourceData? GetLogSourceData(Type? sourceType) =>
 		sourceType != null ?
 			LogSources.GetValueOrDefault(sourceType) :
 			null;
 
-	public static void PopulateLogSources() {
+	protected virtual void PopulateLogSources() {
 
 		if(LogSources != null) {
 

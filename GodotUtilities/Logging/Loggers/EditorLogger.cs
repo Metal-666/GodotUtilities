@@ -9,36 +9,20 @@ namespace Metal666.GodotUtilities.Logging.Loggers;
 [GlobalClass]
 public partial class EditorLogger : LoggerBase {
 
-	public override void Write(string message,
-								LogLevel logLevel,
-								Type? sourceType = null,
-								int indentation = 0) =>
-		Log(message, logLevel, sourceType, indentation);
-
-	public static void Log(string message,
-							LogLevel logLevel,
-							Type? sourceType = null,
-							int indentation = 0) {
-
-		if(Is.Standalone) {
-
-			return;
-
-		}
-
-		PopulateLogSources();
-
-		LogSourceData? logSourceData =
-			GetLogSourceData(sourceType);
+	protected override void Write(string message,
+									LogLevel logLevel,
+									Type? sourceType = null,
+									LogSourceData? sourceData = null,
+									int indentation = 0) {
 
 		switch(logLevel) {
 
 			case LogLevel.Message: {
 
 				GD.PrintRich(message.Indent(indentation)
-											.PrependSource(logSourceData?.Name,
+											.PrependSource(sourceData?.Name,
 															LogSourceData.LongestName)
-											.Color(logSourceData?.Color));
+											.Color(sourceData?.Color));
 
 				break;
 
@@ -46,7 +30,7 @@ public partial class EditorLogger : LoggerBase {
 
 			case LogLevel.Warning: {
 
-				GD.PushWarning(message.PrependSource(logSourceData?.Name));
+				GD.PushWarning(message.PrependSource(sourceData?.Name));
 
 				break;
 
@@ -54,7 +38,7 @@ public partial class EditorLogger : LoggerBase {
 
 			case LogLevel.Error: {
 
-				GD.PushError(message.PrependSource(logSourceData?.Name));
+				GD.PushError(message.PrependSource(sourceData?.Name));
 
 				break;
 
@@ -63,5 +47,7 @@ public partial class EditorLogger : LoggerBase {
 		}
 
 	}
+
+	public override bool ShouldLog => Is.Editor && !Is.Standalone;
 
 }
