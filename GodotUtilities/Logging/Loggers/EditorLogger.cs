@@ -2,27 +2,52 @@
 
 using Metal666.GodotUtilities.Utilities;
 
-using System;
-
 namespace Metal666.GodotUtilities.Logging.Loggers;
 
 [GlobalClass]
 public partial class EditorLogger : LoggerBase {
 
-	protected override void Write(string message,
-									LogLevel logLevel,
-									Type? sourceType = null,
-									LogSourceData? sourceData = null,
-									int indentation = 0) {
+	public override bool ShouldLog => Is.Editor && !Is.Standalone;
 
-		switch(logLevel) {
+	protected override Log Preprocess(Log log) {
+
+		log = base.Preprocess(log);
+
+		if(log.Level == LogLevel.Message) {
+
+			log = log with {
+
+				Message =
+					log.Message.Indent(log.Indentation)
+								.PrependSource(log.SourceData?.Name,
+												LogSourceData.LongestName)
+								.Color(log.SourceData?.Color)
+
+			};
+
+		}
+
+		else {
+
+			log = log with {
+
+				Message = log.Message.PrependSource(log.SourceData?.Name)
+
+			};
+
+		}
+
+		return log;
+
+	}
+
+	protected override void Output(Log log) {
+
+		switch(log.Level) {
 
 			case LogLevel.Message: {
 
-				GD.PrintRich(message.Indent(indentation)
-											.PrependSource(sourceData?.Name,
-															LogSourceData.LongestName)
-											.Color(sourceData?.Color));
+				GD.PrintRich(log.Message);
 
 				break;
 
@@ -30,7 +55,7 @@ public partial class EditorLogger : LoggerBase {
 
 			case LogLevel.Warning: {
 
-				GD.PushWarning(message.PrependSource(sourceData?.Name));
+				GD.PushWarning(log.Message);
 
 				break;
 
@@ -38,7 +63,7 @@ public partial class EditorLogger : LoggerBase {
 
 			case LogLevel.Error: {
 
-				GD.PushError(message.PrependSource(sourceData?.Name));
+				GD.PushError(log.Message);
 
 				break;
 
@@ -47,7 +72,5 @@ public partial class EditorLogger : LoggerBase {
 		}
 
 	}
-
-	public override bool ShouldLog => Is.Editor && !Is.Standalone;
 
 }

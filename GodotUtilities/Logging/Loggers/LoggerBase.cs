@@ -13,6 +13,8 @@ public abstract partial class LoggerBase : Resource {
 	public static Dictionary<Type, LogSourceData> LogSources { get; set; }
 #nullable enable
 
+	public virtual bool ShouldLog => true;
+
 	public virtual void Log(string message,
 								LogLevel logLevel,
 								Type? sourceType = null,
@@ -26,21 +28,20 @@ public abstract partial class LoggerBase : Resource {
 
 		PopulateLogSources();
 
-		Write(message,
-			logLevel,
-			sourceType,
-			GetLogSourceData(sourceType),
-			indentation);
+		Log log =
+			Preprocess(new(message,
+									logLevel,
+									sourceType,
+									indentation));
+
+		Output(log);
+		Postprocess(log);
 
 	}
 
-	protected abstract void Write(string message,
-									LogLevel logLevel,
-									Type? sourceType = null,
-									LogSourceData? sourceData = null,
-									int indentation = 0);
-
-	public virtual bool ShouldLog => true;
+	protected virtual Log Preprocess(Log log) => log;
+	protected abstract void Output(Log log);
+	protected virtual void Postprocess(Log log) { }
 
 	public static LogSourceData? GetLogSourceData(Type? sourceType) =>
 		sourceType != null ?

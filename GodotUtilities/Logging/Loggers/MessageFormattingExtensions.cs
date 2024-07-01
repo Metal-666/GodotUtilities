@@ -29,4 +29,5 @@ public static class MessageFormattingExtensions {
 		color != null ?
 			$"[color={color}]{message}[/color]" :
 			message;
+
 }

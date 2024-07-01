@@ -13,40 +13,26 @@ public partial class ConsoleLogger : LoggerBase {
 
 	public static Dictionary<Type, ConsoleColor>? ConsoleSourceColors { get; set; } = null;
 
-	protected override void Write(string message,
-									LogLevel logLevel,
-									Type? sourceType = null,
-									LogSourceData? sourceData = null,
-									int indentation = 0) {
+	public override bool ShouldLog => !Is.Editor;
 
-		if(ConsoleSourceColors == null) {
+	protected virtual ConsoleColor ForegroundColor { get; set; }
 
-			ConsoleSourceColors = new();
+	protected override Log Preprocess(Log log) {
 
-			foreach((Type LogSourceType, LogSourceData LogSourceData) in LogSources) {
+		log = base.Preprocess(log);
 
-				if(LogSourceData.Color == null) {
+		InitializeConsoleColors();
 
-					continue;
+		ForegroundColor = Console.ForegroundColor;
 
-				}
-
-				ConsoleSourceColors.Add(LogSourceType,
-										ClosestConsoleColor(Color.FromString(LogSourceData.Color,
-																						Colors.White)));
-
-			}
-
-		}
-
-		ConsoleColor foregroundColor = Console.ForegroundColor;
-
-		switch(logLevel) {
+		switch(log.Level) {
 
 			case LogLevel.Message: {
 
-				if(sourceType != null &&
-					ConsoleSourceColors.TryGetValue(sourceType, out ConsoleColor color)) {
+				if(log.SourceType != null &&
+					ConsoleSourceColors != null &&
+					ConsoleSourceColors.TryGetValue(log.SourceType,
+													out ConsoleColor color)) {
 
 					Console.ForegroundColor = color;
 
@@ -74,12 +60,52 @@ public partial class ConsoleLogger : LoggerBase {
 
 		}
 
-		Console.WriteLine(message.Indent(indentation,
-												"-")
-										.PrependSource(sourceData?.Name,
-														LogSourceData.LongestName));
+		return log with {
 
-		Console.ForegroundColor = foregroundColor;
+			Message =
+				log.Message.Indent(log.Indentation,
+									"-")
+							.PrependSource(log.SourceData?.Name,
+											LogSourceData.LongestName)
+
+		};
+
+	}
+
+	protected override void Output(Log log) =>
+		Console.WriteLine(log.Message);
+
+	protected override void Postprocess(Log log) {
+
+		base.Postprocess(log);
+
+		Console.ForegroundColor = ForegroundColor;
+
+	}
+
+	protected virtual void InitializeConsoleColors() {
+
+		if(ConsoleSourceColors != null) {
+
+			return;
+
+		}
+
+		ConsoleSourceColors = new();
+
+		foreach((Type LogSourceType, LogSourceData LogSourceData) in LogSources) {
+
+			if(LogSourceData.Color == null) {
+
+				continue;
+
+			}
+
+			ConsoleSourceColors.Add(LogSourceType,
+									ClosestConsoleColor(Color.FromString(LogSourceData.Color,
+																					Colors.White)));
+
+		}
 
 	}
 
@@ -127,7 +153,5 @@ public partial class ConsoleLogger : LoggerBase {
 		return result;
 
 	}
-
-	public override bool ShouldLog => !Is.Editor;
 
 }
