@@ -29,8 +29,26 @@ public static class Math {
 	public static float ToDeg(this float angle) =>
 		Mathf.RadToDeg(angle);
 
+	public static Vector2 ToDeg(this Vector2 rotation) =>
+		new(rotation.X.ToDeg(),
+					rotation.Y.ToDeg());
+
+	public static Vector3 ToDeg(this Vector3 rotation) =>
+		new(rotation.X.ToDeg(),
+					rotation.Y.ToDeg(),
+					rotation.Z.ToDeg());
+
 	public static float ToRad(this float angle) =>
 		Mathf.DegToRad(angle);
+
+	public static Vector2 ToRad(this Vector2 rotation) =>
+		new(rotation.X.ToRad(),
+					rotation.Y.ToRad());
+
+	public static Vector3 ToRad(this Vector3 rotation) =>
+		new(rotation.X.ToRad(),
+					rotation.Y.ToRad(),
+					rotation.Z.ToRad());
 
 	public static Vector2I RoundToInt(this Vector2 vector) =>
 		new(Mathf.RoundToInt(vector.X),
