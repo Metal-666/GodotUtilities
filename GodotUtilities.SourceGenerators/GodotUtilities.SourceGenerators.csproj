@@ -8,7 +8,7 @@
 		<Author>Metal666</Author>
 		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
 		<RootNamespace>$(Name)</RootNamespace>
-		<Version>0.0.6</Version>
+		<Version>0.0.7</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AssemblyName>$(Name)</AssemblyName>
@@ -27,6 +27,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/Metal-666/GodotUtilities/tree/main/GodotUtilities.SourceGenerators</PackageProjectUrl>
+		<Copyright>Copyright (c) Metal666 2024</Copyright>
+		<Description>Source generators for Metal666.GodotUtilities.</Description>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\LICENSE">

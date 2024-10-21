@@ -4,12 +4,12 @@ namespace Metal666.GodotUtilities.Extensions;
 
 public static class Physics {
 
-	public static RaycastResult3D? RayCast(this Node3D node, PhysicsRayQueryParameters3D parameteres) {
+	public static RaycastResult3D? RayCast(this Node3D node, PhysicsRayQueryParameters3D parameters) {
 
 		Godot.Collections.Dictionary raycastHit =
 			node.GetWorld3D()
 				.DirectSpaceState
-				.IntersectRay(parameteres);
+				.IntersectRay(parameters);
 
 		if(raycastHit.Count == 0) {
 
@@ -27,12 +27,12 @@ public static class Physics {
 
 	}
 
-	public static RaycastResult2D? RayCast(this Node2D node, PhysicsRayQueryParameters2D parameteres) {
+	public static RaycastResult2D? RayCast(this Node2D node, PhysicsRayQueryParameters2D parameters) {
 
 		Godot.Collections.Dictionary raycastHit =
 			node.GetWorld2D()
 				.DirectSpaceState
-				.IntersectRay(parameteres);
+				.IntersectRay(parameters);
 
 		if(raycastHit.Count == 0) {
 

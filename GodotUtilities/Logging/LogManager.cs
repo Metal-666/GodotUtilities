@@ -15,12 +15,12 @@ public static class LogManager {
 							int indentation = 0) {
 
 		Loggers ??=
-			new() {
+			[
 
 				new EditorLogger(),
 				new ConsoleLogger()
 
-			};
+			];
 
 		foreach(LoggerBase logger in Loggers) {
 

@@ -91,7 +91,7 @@ public partial class ConsoleLogger : LoggerBase {
 
 		}
 
-		ConsoleSourceColors = new();
+		ConsoleSourceColors = [];
 
 		foreach((Type LogSourceType, LogSourceData LogSourceData) in LogSources) {
 

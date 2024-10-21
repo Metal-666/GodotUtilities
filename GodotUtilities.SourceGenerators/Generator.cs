@@ -14,7 +14,7 @@ namespace Metal666.GodotUtilities.SourceGenerators;
 [Generator]
 public class Generator : IIncrementalGenerator {
 
-	private List<string> Logs { get; set; } = new();
+	private List<string> Logs { get; set; } = [];
 	private int LogIndent { get; set; } = 0;
 
 	public void Initialize(IncrementalGeneratorInitializationContext igiContext) {

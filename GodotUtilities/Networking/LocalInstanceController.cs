@@ -12,7 +12,7 @@ public static class LocalInstanceController {
 	public static int Index { get; set; } = -1;
 
 	public static Dictionary<int, Process> MultiplayerChildProcesses { get; set; } =
-		new();
+		[];
 
 	public static void Initialize(int spawnChildrenCount = 0) {
 
