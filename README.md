@@ -63,6 +63,8 @@ A set of utilities I use in my Godot projects.
   - Controls
     - `Range.ValueF()` - retrieve the value of a `Range` node as a `float`.
     - `Range.ValueF()` - retrieve the value of a `Range` node as a rounded `int`.
+    - `Tree.SetColumn(int index, TreeColumnData treeColumnData)` - a shortcut to `Tree.SetColumn*` methods. Set all column properties with a single object.
+    - `Tree.SetColumns(IEnumerable<TreeColumnData> treeColumnDatas)` - sets all Tree columns using the above method.
   - LINQ
     - `IEnumerable.If(bool condition, Func<IEnumerable<TSource>, IEnumerable<TSource>> branch)` - branches inside LINQ chains.
   - Math
@@ -93,6 +95,8 @@ A set of utilities I use in my Godot projects.
     - `Node3D.RotateZDeg(int angle)`, `Node3D.RotateZDeg(float angle)`, `Node3D.RotateZDeg(double angle)` - `Node2D.RotateX`, but in degrees.
   - Tree
     - `Node.Unparent()` - self-explanatory.
+    - `SceneTree.ChangeSceneToFileDeferred(string path, Action<Error>? callback = null)` - calls `SceneTree.ChangeSceneToFile` in deferred mode. The return value is passed to `callback` (if provided).
+    - `SceneTree.ChangeSceneToPackedDeferred(PackedScene packedScene, Action<Error>? callback = null)` - same as above, but for `SceneTree.ChangeSceneToPacked`.
   - Visual
     - `Color.ToVector3()` - creates a vector from the `R`, `G` and `B` values.
     - `Color.ToVector3I()` - creates a vector from the `R8`, `G8` and `B8` values.
