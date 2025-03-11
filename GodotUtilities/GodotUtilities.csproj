@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<Nullable>Enable</Nullable>
+		<TargetFramework>net6.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Author>Metal666</Author>
 		<Name>$(Author).$(MSBuildProjectName.Replace(" ", "_"))</Name>
 		<RootNamespace>$(Name)</RootNamespace>
-		<Version>0.2.3</Version>
+		<Version>0.3.0</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<AssemblyName>$(Name)</AssemblyName>
@@ -27,7 +28,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Description>A set of utilities I use in my Godot projects.</Description>
-		<Copyright>Copyright (c) Metal666 2024</Copyright>
+		<Copyright>Copyright (c) Metal666 2025</Copyright>
 		<PackageTags>godot</PackageTags>
 	</PropertyGroup>
 	<ItemGroup>
@@ -41,7 +42,7 @@
 		</None>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="GodotSharp" Version="4.*" />
+		<PackageReference Include="GodotSharp" Version="4.2.0" />
 		<PackageReference Include="Metal666.GodotUtilities.SourceGenerators" Version="0.0.*" />
 	</ItemGroup>
 </Project>

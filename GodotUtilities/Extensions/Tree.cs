@@ -1,6 +1,8 @@
 ﻿using Godot;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Metal666.GodotUtilities.Extensions;
 
@@ -31,5 +33,10 @@ public static class Tree {
 			callback?.Invoke(error);
 
 		}, packedScene, callback);
+
+	public static List<T> GetChildren<T>(this Node node, bool includeInternal = false) =>
+		[.. node.GetChildren(includeInternal).OfType<T>()];
+	public static List<T> GetChildrenOrThrow<T>(this Node node, bool includeInternal = false) =>
+		[.. node.GetChildren(includeInternal).Cast<T>()];
 
 }

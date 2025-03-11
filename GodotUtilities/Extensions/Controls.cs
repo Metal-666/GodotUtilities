@@ -11,7 +11,7 @@ public static class Controls {
 		(float) range.Value;
 
 	public static int ValueI(this Range range) =>
-		range.Value.RoundToInt();
+		Math.RoundToInt(range.Value);
 
 	public static void SetColumn(this Godot.Tree tree,
 									int index,
